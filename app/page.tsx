@@ -6,6 +6,7 @@ import RegistrationCard from "@/components/sections/RegistrationCard";
 import Gallery from "@/components/sections/Gallery";
 import WhyJoin from "@/components/sections/WhyJoin";
 import Footer from "@/components/sections/Footer";
+import Contact from "@/components/sections/Contact";
 
 export default function Home() {
   return (
@@ -33,6 +34,8 @@ export default function Home() {
 
       {/* Gallery */}
       <Gallery />
+
+      <Contact />
 
       {/* Footer */}
       <Footer /> 
