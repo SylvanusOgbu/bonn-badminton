@@ -4,6 +4,7 @@ import About from "@/components/sections/About";
 import InfoPanel from "@/components/sections/InfoPanel";
 import RegistrationCard from "@/components/sections/RegistrationCard";
 import Gallery from "@/components/sections/Gallery";
+import WhyJoin from "@/components/sections/WhyJoin";
 import Footer from "@/components/sections/Footer";
 
 export default function Home() {
@@ -27,6 +28,8 @@ export default function Home() {
 
         </div>
       </section>
+
+      <WhyJoin />
 
       {/* Gallery */}
       <Gallery />
