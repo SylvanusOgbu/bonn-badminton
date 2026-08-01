@@ -74,18 +74,24 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="flex gap-5">
-              <Phone className="text-lime-500" />
-              <div>
-                <h3 className="font-bold text-xl">
-                  WhatsApp
-                </h3>
+<div className="flex gap-5">
+  <Phone className="text-lime-500" />
 
-                <p className="text-slate-600">
-                  Community Invite Available
-                </p>
-              </div>
-            </div>
+  <div>
+    <h3 className="font-bold text-xl">
+      WhatsApp Community
+    </h3>
+
+    <a
+      href="https://chat.whatsapp.com/Dzr4ZHMOViN6Q4nwfZb8pb"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="font-medium text-lime-500 hover:text-lime-600 hover:underline"
+    >
+      Join our WhatsApp Community →
+    </a>
+  </div>
+</div>
 
           </div>
 
