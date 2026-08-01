@@ -3,7 +3,7 @@ import {
   CalendarDays,
   Clock,
   Mail,
-  Instagram,
+  Camera,
   MessageCircle,
   Heart,
 } from "lucide-react";
@@ -126,7 +126,7 @@ export default function Footer() {
               </div>
 
               <div className="flex gap-3">
-                <Instagram className="text-lime-400 w-5 h-5 mt-1" />
+                <Camera className="text-lime-400 w-5 h-5 mt-1" />
                 <span>@bonnbadminton</span>
               </div>
 
