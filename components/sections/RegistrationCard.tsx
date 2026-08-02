@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { supabase } from "@/lib/supabase";
 
 export default function RegistrationCard() {
   const [form, setForm] = useState({
@@ -27,14 +28,50 @@ export default function RegistrationCard() {
     });
   }
 
-  function submit(e: React.FormEvent) {
-    e.preventDefault();
+async function submit(e: React.FormEvent) {
+  e.preventDefault();
 
-    console.log(form);
+  const { data, error } = await supabase
+    .from("members")
+    .insert([
+      {
+        first_name: form.firstName,
+        surname: form.surname,
+        nickname: form.nickname,
+        skill_level: form.level,
+        has_racket: form.racket === "Yes",
+        has_shuttles: form.shuttles === "Yes",
+        supports_shuttles: form.support === "Yes",
+        split_payment: form.payment === "Yes",
+        hangout_interest: form.hangout,
+        notes: form.notes,
+      },
+    ])
+    .select();
 
-    alert("Registration saved locally.\n\nSupabase comes next.");
+  console.log("DATA:", data);
+  console.log("ERROR:", error);
+
+  if (error) {
+    alert("Registration failed.");
+    return;
   }
 
+  alert("Registration successful! 🎉");
+
+  setForm({
+    firstName: "",
+    surname: "",
+    nickname: "",
+    level: "Intermediate",
+    racket: "",
+    shuttles: "",
+    support: "",
+    payment: "",
+    hangout: "",
+    notes: "",
+  });
+}
   const optionStyle =
     "border rounded-lg px-3 py-2 w-full outline-none focus:ring-2 focus:ring-lime-500";
 
