@@ -3,18 +3,18 @@
 import { useState } from "react";
 
 export default function RegistrationCard() {
-  const [form, setForm] = useState({
-    firstName: "",
-    surname: "",
-    nickname: "",
-    level: "Intermediate",
-    racket: "",
-    shuttles: "",
-    support: "",
-    payment: "",
-    hangout: "",
-    notes: "",
-  });
+ const [form, setForm] = useState({
+  firstName: "",
+  surname: "",
+  nickname: "",
+  level: "",
+  racket: "",
+  shuttles: "",
+  support: "",
+  payment: "",
+  hangout: "",
+  notes: "",
+});
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
@@ -32,51 +32,65 @@ export default function RegistrationCard() {
   }
 
   async function submit(e: React.FormEvent) {
-    e.preventDefault();
+  e.preventDefault();
 
-    setLoading(true);
-    setSuccess("");
-    setErrorMessage("");
-
-    try {
-      const response = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
-
-      const result = await response.json();
-
-      console.log(result);
-
-      if (!response.ok) {
-        setErrorMessage(result.error || "Registration failed.");
-        return;
-      }
-
-      setSuccess("🎉 Registration successful! Welcome to Bonn Badminton.");
-
-      setForm({
-        firstName: "",
-        surname: "",
-        nickname: "",
-        level: "Intermediate",
-        racket: "",
-        shuttles: "",
-        support: "",
-        payment: "",
-        hangout: "",
-        notes: "",
-      });
-    } catch (err) {
-      console.error(err);
-      setErrorMessage("Unable to connect to the server.");
-    } finally {
-      setLoading(false);
-    }
+  if (
+    !form.firstName.trim() ||
+    !form.surname.trim() ||
+    !form.level ||
+    !form.racket ||
+    !form.shuttles ||
+    !form.support ||
+    !form.payment ||
+    !form.hangout
+  ) {
+    setErrorMessage("Please complete all required fields.");
+    return;
   }
+
+  setLoading(true);
+  setSuccess("");
+  setErrorMessage("");
+
+  try {
+    const response = await fetch("/api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      setErrorMessage(result.error || "Registration failed.");
+      return;
+    }
+
+    setSuccess(
+      "🎉 Registration successful! Welcome to Bonn Badminton."
+    );
+
+    setForm({
+      firstName: "",
+      surname: "",
+      nickname: "",
+      level: "",
+      racket: "",
+      shuttles: "",
+      support: "",
+      payment: "",
+      hangout: "",
+      notes: "",
+    });
+  } catch (err) {
+    console.error(err);
+    setErrorMessage("Unable to connect to the server.");
+  } finally {
+    setLoading(false);
+  }
+}
 
   const inputStyle =
     "w-full rounded-lg border px-4 py-3 outline-none focus:ring-2 focus:ring-lime-500";
@@ -158,17 +172,22 @@ export default function RegistrationCard() {
               Badminton Level
             </label>
 
-            <select
-              className={inputStyle}
-              name="level"
-              value={form.level}
-              onChange={handleChange}
-            >
-              <option>Beginner</option>
-              <option>Lower Intermediate</option>
-              <option>Intermediate</option>
-              <option>Advanced</option>
-            </select>
+           <select
+  className={inputStyle}
+  name="level"
+  value={form.level}
+  onChange={handleChange}
+  required
+>
+  <option value="" disabled>
+    Select your level
+  </option>
+
+  <option value="Beginner">Beginner</option>
+  <option value="Lower Intermediate">Lower Intermediate</option>
+  <option value="Intermediate">Intermediate</option>
+  <option value="Advanced">Advanced</option>
+</select>
           </div>
         </div>
 
@@ -183,8 +202,9 @@ export default function RegistrationCard() {
               name="racket"
               value={form.racket}
               onChange={handleChange}
+              required
             >
-              <option value="">Choose...</option>
+              <option value="" disabled>Choose...</option>
               <option>Yes</option>
               <option>No</option>
               <option>I can borrow one</option>
@@ -201,8 +221,9 @@ export default function RegistrationCard() {
               name="shuttles"
               value={form.shuttles}
               onChange={handleChange}
+              required
             >
-              <option value="">Choose...</option>
+              <option value="" disabled>Choose...</option>
               <option>Yes</option>
               <option>No</option>
               <option>Sometimes</option>
@@ -221,8 +242,9 @@ export default function RegistrationCard() {
               name="support"
               value={form.support}
               onChange={handleChange}
+              required
             >
-              <option value="">Choose...</option>
+              <option value="" disabled>Choose...</option>
               <option>Yes</option>
               <option>Maybe</option>
               <option>No</option>
@@ -239,8 +261,9 @@ export default function RegistrationCard() {
               name="payment"
               value={form.payment}
               onChange={handleChange}
+              required
             >
-              <option value="">Choose...</option>
+              <option value="" disabled>Choose...</option>
               <option>Yes</option>
               <option>Maybe</option>
               <option>No</option>
@@ -258,8 +281,9 @@ export default function RegistrationCard() {
             name="hangout"
             value={form.hangout}
             onChange={handleChange}
+            required
           >
-            <option value="">Choose...</option>
+            <option value="" disabled>Choose...</option>
             <option>Very Open</option>
             <option>Open</option>
             <option>Sometimes</option>
@@ -280,16 +304,17 @@ export default function RegistrationCard() {
             placeholder="Optional..."
             value={form.notes}
             onChange={handleChange}
+            required
           />
         </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full rounded-xl bg-lime-500 py-4 text-lg font-bold text-white transition hover:bg-lime-600 disabled:cursor-not-allowed disabled:bg-gray-400"
-        >
-          {loading ? "Registering..." : "Register"}
-        </button>
+       <button
+  type="submit"
+  disabled={loading}
+  className="w-full rounded-xl bg-lime-500 py-4 text-lg font-bold text-white transition hover:bg-lime-600 disabled:cursor-not-allowed disabled:opacity-50"
+>
+  {loading ? "Registering..." : "Register Now"}
+</button>
       </form>
     </section>
   );
