@@ -6,7 +6,7 @@ export default function RegistrationCard() {
  const [form, setForm] = useState({
   firstName: "",
   surname: "",
-  nickname: "",
+  Email: "",
   level: "",
   racket: "",
   shuttles: "",
@@ -75,7 +75,7 @@ export default function RegistrationCard() {
     setForm({
       firstName: "",
       surname: "",
-      nickname: "",
+      Email: "",
       level: "",
       racket: "",
       shuttles: "",
@@ -155,15 +155,16 @@ export default function RegistrationCard() {
         <div className="grid gap-6 md:grid-cols-2">
           <div>
             <label className="mb-2 block font-semibold">
-              Nickname
+              Email
             </label>
 
             <input
               className={inputStyle}
-              name="nickname"
-              placeholder="Johnny"
-              value={form.nickname}
+              name="Email"
+              placeholder="Johnnydoe@gmail.com"
+              value={form.Email}
               onChange={handleChange}
+              required
             />
           </div>
 
