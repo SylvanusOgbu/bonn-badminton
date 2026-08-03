@@ -53,13 +53,11 @@ export default function Hero() {
 
         </div>
 
-        <div className="mt-12 space-y-2 text-white">
-          <p>📍 Sportmeile Bonn</p>
-          <p>🗓 Every Thursday</p>
-          <p>🕡 18:30 – 21:00</p>
-        </div>
+       
 
-      </div>
+          </div>
+
+    
 
     </section>
   );
