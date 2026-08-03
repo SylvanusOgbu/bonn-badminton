@@ -25,10 +25,10 @@ export default function InfoPanel() {
           </h3>
 
           <p className="mt-2">
-            Sportmeile Bonn
+            Phoenix Badminton-Center GmbH &amp; Co. KG
           </p>
 
-          <p>(Pützchen)</p>
+          <p>Pützchens Chaussee 202</p>
         </div>
 
         <div>
