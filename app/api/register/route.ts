@@ -9,7 +9,7 @@ export async function POST(request: Request) {
       {
         first_name: body.firstName,
         surname: body.surname,
-        nickname: body.nickname,
+        email: body.email,
         skill_level: body.level,
         has_racket: body.racket === "Yes",
         has_shuttles: body.shuttles === "Yes",
