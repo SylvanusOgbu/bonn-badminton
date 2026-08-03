@@ -1,55 +1,66 @@
-import Image from "next/image";
+<section className="relative min-h-screen flex items-center">
 
-export default function Hero() {
-  return (
-    <section className="relative h-[90vh] flex items-center justify-center">
+  {/* Background */}
+  <div
+    className="absolute inset-0 bg-cover bg-center"
+    style={{
+      backgroundImage: "url('/images/drachenburg.jpg')",
+    }}
+  />
 
-      <Image
-        src="/images/hero/bonn.jpg"
-        alt="Bonn Skyline"
-        fill
-        className="object-cover"
-        priority
-      />
+  {/* Dark overlay */}
+  <div className="absolute inset-0 bg-black/60" />
 
-      <div className="absolute inset-0 bg-[#071321]/75"/>
+  {/* Content */}
+  <div className="relative z-10 mx-auto max-w-7xl px-6">
 
-      <div className="relative z-10 text-center text-white">
+    <p className="uppercase tracking-[0.3em] text-lime-400 font-bold">
+      Welcome to
+    </p>
 
-        <h1 className="text-6xl font-black tracking-tight">
-          BONN BADMINTON
-        </h1>
+    <h1 className="mt-4 text-6xl md:text-8xl font-black text-white">
+      BONN
+      <br />
+      <span className="text-lime-400">
+        BADMINTON
+      </span>
+    </h1>
 
-        <p className="mt-5 text-3xl font-semibold text-lime-400">
-          Play • Connect • Grow
-        </p>
+    <p className="mt-8 max-w-2xl text-xl text-white/90">
+      Play • Connect • Grow Together.
+      Join weekly training sessions,
+      friendly matches, tournaments,
+      and a welcoming badminton community in Bonn.
+    </p>
 
-        <p className="mt-8 text-xl">
-          Every Thursday • 18:30 – 21:00
-        </p>
+    <div className="mt-10 flex gap-4 flex-wrap">
 
-        <p className="opacity-80">
-          Sportmeile Bonn (Pützchen)
-        </p>
+      <a
+        href="#register"
+        className="rounded-xl bg-lime-500 px-8 py-4 font-bold text-white hover:bg-lime-600"
+      >
+        Join the Community
+      </a>
 
-        <button
-          className="
-          mt-10
-          bg-lime-500
-          hover:bg-lime-600
-          px-10
-          py-4
-          rounded-xl
-          text-lg
-          font-bold
-          transition
-          "
-        >
-          Register Now
-        </button>
+      <a
+        href="#gallery"
+        className="rounded-xl border-2 border-white px-8 py-4 font-bold text-white hover:bg-white hover:text-black"
+      >
+        View Gallery
+      </a>
 
-      </div>
+    </div>
 
-    </section>
-  );
-}
+    <div className="mt-12 text-white space-y-2">
+
+      <p>📍 Sportmeile Bonn</p>
+
+      <p>🗓 Every Thursday</p>
+
+      <p>🕡 18:30 – 21:00</p>
+
+    </div>
+
+  </div>
+
+</section>
