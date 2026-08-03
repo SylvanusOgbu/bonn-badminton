@@ -5,11 +5,10 @@ export default function Gallery() {
       image:
         "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=800",
     },
-    {
-      title: "Friendly Matches",
-      image:
-        "https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800",
-    },
+   {
+  title: "Friendly Matches",
+  image: "/images/gallery/badminton.jpg",
+},
     {
       title: "Community",
       image:
