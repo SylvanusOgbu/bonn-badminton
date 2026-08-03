@@ -35,7 +35,7 @@ const benefits = [
 
 const stats = [
   {
-    number: "80+",
+    number: "10+",
     label: "Community Members",
   },
   {
@@ -56,7 +56,7 @@ export default function WhyJoin() {
   return (
     <section
       id="join"
-      className="bg-slate-900 py-24 text-white"
+      className="bg-slate-900 py-14 text-white"
     >
       <div className="mx-auto max-w-7xl px-6">
 
@@ -132,7 +132,7 @@ export default function WhyJoin() {
 
         {/* CTA */}
 
-        <div className="mt-20 text-center">
+        <div className="mt-10 text-center">
 
           <h3 className="text-4xl font-black">
             Ready to Play?

@@ -9,7 +9,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="bg-slate-100 py-24"
+      className="bg-slate-100 py-14"
     >
       <div className="mx-auto max-w-7xl px-6">
 

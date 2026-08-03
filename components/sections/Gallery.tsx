@@ -35,7 +35,7 @@ export default function Gallery() {
   return (
     <section
       id="gallery"
-      className="max-w-7xl mx-auto px-6 py-24"
+      className="max-w-7xl mx-auto px-6 py-14"
     >
       <div className="text-center mb-14">
         <h2 className="text-5xl font-black text-slate-900">
