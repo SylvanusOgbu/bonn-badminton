@@ -22,7 +22,7 @@ export default function Gallery() {
     {
       title: "Tournament Day",
       image:
-        "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800",
+        "/images/gallery/highwork.jpg",
     },
     {
       title: "New Friends",
