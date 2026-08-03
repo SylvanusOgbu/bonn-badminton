@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { supabase } from "@/lib/supabase";
 
 export default function RegistrationCard() {
   const [form, setForm] = useState({
@@ -17,87 +16,104 @@ export default function RegistrationCard() {
     notes: "",
   });
 
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
   function handleChange(
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) {
-    setForm({
-      ...form,
+    setForm((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
-    });
+    }));
   }
 
-async function submit(e: React.FormEvent) {
-  e.preventDefault();
+  async function submit(e: React.FormEvent) {
+    e.preventDefault();
 
-  const { data, error } = await supabase
-    .from("members")
-    .insert([
-      {
-        first_name: form.firstName,
-        surname: form.surname,
-        nickname: form.nickname,
-        skill_level: form.level,
-        has_racket: form.racket === "Yes",
-        has_shuttles: form.shuttles === "Yes",
-        supports_shuttles: form.support === "Yes",
-        split_payment: form.payment === "Yes",
-        hangout_interest: form.hangout,
-        notes: form.notes,
-      },
-    ])
-    .select();
+    setLoading(true);
+    setSuccess("");
+    setErrorMessage("");
 
-  console.log("DATA:", data);
-  console.log("ERROR:", error);
+    try {
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
 
-  if (error) {
-    alert("Registration failed.");
-    return;
+      const result = await response.json();
+
+      console.log(result);
+
+      if (!response.ok) {
+        setErrorMessage(result.error || "Registration failed.");
+        return;
+      }
+
+      setSuccess("🎉 Registration successful! Welcome to Bonn Badminton.");
+
+      setForm({
+        firstName: "",
+        surname: "",
+        nickname: "",
+        level: "Intermediate",
+        racket: "",
+        shuttles: "",
+        support: "",
+        payment: "",
+        hangout: "",
+        notes: "",
+      });
+    } catch (err) {
+      console.error(err);
+      setErrorMessage("Unable to connect to the server.");
+    } finally {
+      setLoading(false);
+    }
   }
 
-  alert("Registration successful! 🎉");
-
-  setForm({
-    firstName: "",
-    surname: "",
-    nickname: "",
-    level: "Intermediate",
-    racket: "",
-    shuttles: "",
-    support: "",
-    payment: "",
-    hangout: "",
-    notes: "",
-  });
-}
-  const optionStyle =
-    "border rounded-lg px-3 py-2 w-full outline-none focus:ring-2 focus:ring-lime-500";
+  const inputStyle =
+    "w-full rounded-lg border px-4 py-3 outline-none focus:ring-2 focus:ring-lime-500";
 
   return (
     <section
       id="register"
-      className="bg-white rounded-3xl shadow-xl p-10"
+      className="rounded-3xl bg-white p-10 shadow-xl"
     >
-      <h2 className="text-4xl font-black text-slate-900 mb-8">
+      <h2 className="mb-8 text-4xl font-black text-slate-900">
         Join Our Community
       </h2>
+
+      {success && (
+        <div className="mb-6 rounded-xl border border-green-300 bg-green-100 p-4 text-green-800">
+          {success}
+        </div>
+      )}
+
+      {errorMessage && (
+        <div className="mb-6 rounded-xl border border-red-300 bg-red-100 p-4 text-red-800">
+          {errorMessage}
+        </div>
+      )}
 
       <form
         onSubmit={submit}
         className="space-y-8"
       >
-        {/* Row 1 */}
-
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid gap-6 md:grid-cols-2">
           <div>
-            <label className="font-semibold block mb-2">
+            <label className="mb-2 block font-semibold">
               First Name
             </label>
 
             <input
-              className={optionStyle}
+              className={inputStyle}
               name="firstName"
               placeholder="John"
               value={form.firstName}
@@ -107,12 +123,12 @@ async function submit(e: React.FormEvent) {
           </div>
 
           <div>
-            <label className="font-semibold block mb-2">
+            <label className="mb-2 block font-semibold">
               Surname
             </label>
 
             <input
-              className={optionStyle}
+              className={inputStyle}
               name="surname"
               placeholder="Doe"
               value={form.surname}
@@ -122,16 +138,14 @@ async function submit(e: React.FormEvent) {
           </div>
         </div>
 
-        {/* Row 2 */}
-
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid gap-6 md:grid-cols-2">
           <div>
-            <label className="font-semibold block mb-2">
+            <label className="mb-2 block font-semibold">
               Nickname
             </label>
 
             <input
-              className={optionStyle}
+              className={inputStyle}
               name="nickname"
               placeholder="Johnny"
               value={form.nickname}
@@ -140,12 +154,12 @@ async function submit(e: React.FormEvent) {
           </div>
 
           <div>
-            <label className="font-semibold block mb-2">
+            <label className="mb-2 block font-semibold">
               Badminton Level
             </label>
 
             <select
-              className={optionStyle}
+              className={inputStyle}
               name="level"
               value={form.level}
               onChange={handleChange}
@@ -158,16 +172,14 @@ async function submit(e: React.FormEvent) {
           </div>
         </div>
 
-        {/* Row 3 */}
-
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid gap-6 md:grid-cols-2">
           <div>
-            <label className="font-semibold block mb-2">
+            <label className="mb-2 block font-semibold">
               Do you own a racket?
             </label>
 
             <select
-              className={optionStyle}
+              className={inputStyle}
               name="racket"
               value={form.racket}
               onChange={handleChange}
@@ -180,12 +192,12 @@ async function submit(e: React.FormEvent) {
           </div>
 
           <div>
-            <label className="font-semibold block mb-2">
+            <label className="mb-2 block font-semibold">
               Do you have shuttles?
             </label>
 
             <select
-              className={optionStyle}
+              className={inputStyle}
               name="shuttles"
               value={form.shuttles}
               onChange={handleChange}
@@ -198,16 +210,14 @@ async function submit(e: React.FormEvent) {
           </div>
         </div>
 
-        {/* Row 4 */}
-
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid gap-6 md:grid-cols-2">
           <div>
-            <label className="font-semibold block mb-2">
+            <label className="mb-2 block font-semibold">
               Help buy shuttles?
             </label>
 
             <select
-              className={optionStyle}
+              className={inputStyle}
               name="support"
               value={form.support}
               onChange={handleChange}
@@ -220,12 +230,12 @@ async function submit(e: React.FormEvent) {
           </div>
 
           <div>
-            <label className="font-semibold block mb-2">
+            <label className="mb-2 block font-semibold">
               Split court payment?
             </label>
 
             <select
-              className={optionStyle}
+              className={inputStyle}
               name="payment"
               value={form.payment}
               onChange={handleChange}
@@ -238,15 +248,13 @@ async function submit(e: React.FormEvent) {
           </div>
         </div>
 
-        {/* Row 5 */}
-
         <div>
-          <label className="font-semibold block mb-2">
+          <label className="mb-2 block font-semibold">
             After badminton hangout?
           </label>
 
           <select
-            className={optionStyle}
+            className={inputStyle}
             name="hangout"
             value={form.hangout}
             onChange={handleChange}
@@ -260,16 +268,14 @@ async function submit(e: React.FormEvent) {
           </select>
         </div>
 
-        {/* Row 6 */}
-
         <div>
-          <label className="font-semibold block mb-2">
+          <label className="mb-2 block font-semibold">
             Anything we should know?
           </label>
 
           <textarea
             rows={4}
-            className={optionStyle}
+            className={inputStyle}
             name="notes"
             placeholder="Optional..."
             value={form.notes}
@@ -278,9 +284,11 @@ async function submit(e: React.FormEvent) {
         </div>
 
         <button
-          className="w-full rounded-xl bg-lime-500 hover:bg-lime-600 transition text-white font-bold text-lg py-4"
+          type="submit"
+          disabled={loading}
+          className="w-full rounded-xl bg-lime-500 py-4 text-lg font-bold text-white transition hover:bg-lime-600 disabled:cursor-not-allowed disabled:bg-gray-400"
         >
-          Register
+          {loading ? "Registering..." : "Register"}
         </button>
       </form>
     </section>
